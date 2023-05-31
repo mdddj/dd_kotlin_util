@@ -1,0 +1,32 @@
+package @package
+
+import jakarta.annotation.Resource
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Service
+
+@Service
+class @nameServiceImpl : @nameService {
+    @Resource
+    lateinit var @mininameRepository: @nameRepository
+    override fun findAll(): List<@name> {
+        return @mininameRepository.findAll()
+    }
+
+    override fun save(entity: @name): @name {
+        return @mininameRepository.save(entity)
+    }
+
+    override fun deleteById(id: Long) {
+        @mininameRepository.deleteById(id)
+    }
+
+    override fun findById(id: Long): @name? {
+        return @mininameRepository.findByIdOrNull(id)
+    }
+
+    override fun findAllByPage(pageable: Pageable): Page<@name> {
+        return @mininameRepository.findAll(pageable)
+    }
+}

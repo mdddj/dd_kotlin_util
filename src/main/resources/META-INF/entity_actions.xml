@@ -1,0 +1,8 @@
+<idea-plugin>
+    <actions>
+        <group id="antd entity util" popup="true" text="Antd Utils">
+            <action id="create table columns" class="shop.itbug.dd_kotlin_util.action.AntdCreateColumnsToolAction" text="生成TableColumns" />
+            <add-to-group group-id="EditorPopupMenu"/>
+        </group>
+    </actions>
+</idea-plugin>

@@ -1,0 +1,14 @@
+package @package
+
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.stereotype.Service
+
+@Service
+interface @nameService {
+    fun findAll(): List<@name>
+    fun save(entity: @name): @name
+    fun deleteById(id: Long)
+    fun findById(id: Long): @name?
+    fun findAllByPage(pageable: Pageable): Page<@name>
+}
