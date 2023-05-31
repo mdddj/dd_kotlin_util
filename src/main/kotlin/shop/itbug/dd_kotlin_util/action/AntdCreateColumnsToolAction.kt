@@ -11,8 +11,14 @@ import shop.itbug.dd_kotlin_util.util.KtUtil
 import shop.itbug.dd_kotlin_util.util.MyUtil
 
 data class ColumnTypeObject(val key: String,val dataIndex: String,val title: String)
+
+
 ///生成表格列
+
 class AntdCreateColumnsToolAction : AnAction(){
+
+
+
     override fun actionPerformed(e: AnActionEvent) {
         val ktClass = e.getKtClass()!!
         val properties = ktClass.getProperties()
@@ -22,7 +28,6 @@ class AntdCreateColumnsToolAction : AnAction(){
             objects.add(ColumnTypeObject(it.name?:"",it.name?:"",name))
         }
         val string = JSONUtil.toJsonPrettyStr(objects)
-        println(string)
         MyUtil.copyTextToClipboard(string)
     }
 
