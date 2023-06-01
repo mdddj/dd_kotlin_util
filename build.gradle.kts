@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "shop.itbug"
-version = "1.0-SNAPSHOT"
+version = "1.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -15,9 +15,9 @@ repositories {
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     version.set("2022.2.5")
-    type.set("IC") // Target IDE Platform
+    type.set("IU") // Target IDE Platform
 
-    plugins.set(listOf("org.jetbrains.kotlin"))
+    plugins.set(listOf("org.jetbrains.kotlin","JavaScript"))
 }
 
 tasks {

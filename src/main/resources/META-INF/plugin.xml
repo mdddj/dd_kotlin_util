@@ -20,6 +20,7 @@
   ]]></description>
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
+    <depends>JavaScript</depends>
     <depends optional="true" config-file="entity_actions.xml">org.jetbrains.kotlin</depends>
     <extensions defaultExtensionNs="com.intellij">
 
