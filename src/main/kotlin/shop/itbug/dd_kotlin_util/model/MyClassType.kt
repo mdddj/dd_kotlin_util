@@ -23,6 +23,7 @@ fun MyClassType.getTypescriptTypeName(): String {
         "BigInteger" -> "BigInt"
         "BigDecimal" -> "Decimal"
         "Date" -> "Date"
+        "Long" -> "number"
         else -> type
     }
 }

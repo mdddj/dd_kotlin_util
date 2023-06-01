@@ -12,6 +12,9 @@ import com.intellij.psi.codeStyle.CodeStyleManager
 import org.jetbrains.kotlin.idea.KotlinLanguage
 import org.jetbrains.kotlin.idea.util.application.runWriteAction
 import org.jetbrains.kotlin.psi.KtFile
+import org.jetbrains.kotlin.psi.KtNamedFunction
+import org.jetbrains.kotlin.psi.KtParameterList
+import java.util.*
 
 /**
  * psi工具类
@@ -57,4 +60,20 @@ object PsiUtil {
     }
 
 
+}
+
+
+/**
+ * 获取方法名
+ */
+fun KtNamedFunction.getFunctionName() : String{
+   return children.find { it is KtParameterList }?.prevSibling?.text ?: ""
+}
+
+/**
+ * 获取方法类型
+ */
+fun KtNamedFunction.getRequestMappingType() : String {
+    val findMappingAnnotationEntries = KtUtil.findMappingAnnotationEntries(this)
+    return findMappingAnnotationEntries?.shortName?.toString()?.replace("Mapping","")?.uppercase(Locale.getDefault()) ?: ""
 }

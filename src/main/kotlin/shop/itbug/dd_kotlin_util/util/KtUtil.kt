@@ -6,8 +6,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.idea.util.findSingleLiteralStringTemplateText
 import org.jetbrains.kotlin.psi.*
-import shop.itbug.dd_kotlin_util.action.ColumnTypeObject
-import shop.itbug.dd_kotlin_util.action.getKtClass
 import shop.itbug.dd_kotlin_util.action.getType
 import shop.itbug.dd_kotlin_util.action.isNull
 import shop.itbug.dd_kotlin_util.model.MyClassType
@@ -55,7 +53,7 @@ object KtUtil {
         return entries.find { mappingTexts.contains(it.shortName.toString()) }
     }
 
-    fun findParentClassRequestMappingApi(namedFunction: KtNamedFunction) : String? {
+    private fun findParentClassRequestMappingApi(namedFunction: KtNamedFunction) : String? {
         val parent = PsiTreeUtil.findFirstParent(namedFunction) { it is KtClass } as? KtClass
         if(parent!=null){
             findAnnotationEntries(parent.annotationEntries) {it.shortName?.toString() == "RequestMapping"}?.apply {
@@ -68,7 +66,7 @@ object KtUtil {
         return null
     }
 
-    fun findAnnotationEntries(entriesList:List<KtAnnotationEntry>, match: (entries: KtAnnotationEntry) -> Boolean) : KtAnnotationEntry? {
+    private fun findAnnotationEntries(entriesList:List<KtAnnotationEntry>, match: (entries: KtAnnotationEntry) -> Boolean) : KtAnnotationEntry? {
         return entriesList.find {  match.invoke(it)  }
     }
 
