@@ -6,7 +6,6 @@ import com.intellij.openapi.ui.DialogPanel
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.dsl.builder.bindText
 import com.intellij.ui.dsl.builder.panel
-import com.intellij.ui.layout.ValidationInfoBuilder
 import shop.itbug.dd_kotlin_util.constant.TempFileNames
 import shop.itbug.dd_kotlin_util.model.GenerateModuleConfiguration
 import shop.itbug.dd_kotlin_util.util.FileUtil
@@ -39,12 +38,12 @@ class GenerateModuleConfigurationDialog(private val project: Project, private va
     override fun createCenterPanel(): JComponent {
         contentPanel = panel {
             row("类名") {
-                textField().bindText(configuration::className).validation {
+                textField().bindText(configuration::className).validationInfo {
                     val empty = it.text.isEmpty()
                     if (empty) {
-                        return@validation ValidationInfoBuilder(it).error("请输入类名")
+                         this.error("")
                     }
-                    return@validation null
+                     this.warning("").withOKEnabled()
                 }
             }
             row("包名") {

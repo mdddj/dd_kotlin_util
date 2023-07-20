@@ -2,23 +2,22 @@ package shop.itbug.dd_kotlin_util.util
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.project.Project
 import com.intellij.psi.util.PsiTreeUtil
-import org.jetbrains.kotlin.idea.util.findSingleLiteralStringTemplateText
-import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.idea.base.psi.findSingleLiteralStringTemplateText
+import org.jetbrains.kotlin.psi.KtAnnotationEntry
+import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtNamedFunction
+import org.jetbrains.kotlin.psi.KtProperty
 import shop.itbug.dd_kotlin_util.action.getType
 import shop.itbug.dd_kotlin_util.action.isNull
 import shop.itbug.dd_kotlin_util.model.MyClassType
 
 object KtUtil {
-    fun createClass(project: Project) {
-        val ktClass = KtPsiFactory(project, true).createClass("")
-    }
 
     /**
      * 获取注解属性的值
      */
-    fun getAnnotationPropertiesName(ktProperty: KtProperty, annotationName: String, key: String): String {
+    private fun getAnnotationPropertiesName(ktProperty: KtProperty, annotationName: String, key: String): String {
         var name = ktProperty.name ?: "未知"
         val annotationList = PsiTreeUtil.findChildrenOfType(ktProperty, KtAnnotationEntry::class.java)
         annotationList.forEach { anno ->

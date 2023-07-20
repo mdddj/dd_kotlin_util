@@ -15,6 +15,10 @@ fun MyClassType.getName(): String {
     return key
 }
 
+
+
+
+
 fun MyClassType.getTypescriptTypeName(): String {
     return when (type) {
         "String" -> "string"

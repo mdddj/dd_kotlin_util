@@ -8,15 +8,15 @@
     <name>Dd_kotlin_util</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="hlxsmail@gmail.com" url="https://itbug.shop">梁典典软甲开发中心</vendor>
+    <vendor email="hlxsmail@gmail.com" url="https://itbug.shop">梁典典</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-        梁典典的自动生成代码工具,但是只支持kotlin
-        1.自动生成实体module类
-        2....
+        Liang Diandian's automatic code generation tool, but only supports kotlin
+        1. Automatically generate entity module classes
+        2...
   ]]></description>
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
@@ -30,6 +30,7 @@
                 text="创建模块">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="CutCopyPasteGroup"/>
         </action>
+
     </actions>
 
 </idea-plugin>
