@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "shop.itbug"
-version = "1.4-SNAPSHOT"
+version = "1.6-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -16,7 +16,6 @@ repositories {
 intellij {
     version.set("232-EAP-SNAPSHOT")
     type.set("IU") // Target IDE Platform
-
     plugins.set(listOf("org.jetbrains.kotlin","JavaScript"))
 }
 

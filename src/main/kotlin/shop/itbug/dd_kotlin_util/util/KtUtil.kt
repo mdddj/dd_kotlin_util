@@ -10,7 +10,9 @@ import org.jetbrains.kotlin.psi.KtNamedFunction
 import org.jetbrains.kotlin.psi.KtProperty
 import shop.itbug.dd_kotlin_util.action.getType
 import shop.itbug.dd_kotlin_util.action.isNull
+import shop.itbug.dd_kotlin_util.extend.getModel
 import shop.itbug.dd_kotlin_util.model.MyClassType
+import shop.itbug.dd_kotlin_util.model.getSchemaDescription
 
 object KtUtil {
 
@@ -90,8 +92,8 @@ object KtUtil {
         val properties = ktClass.getProperties()
         val objects = mutableListOf<MyClassType>()
         properties.forEach {
-            val name = getAnnotationPropertiesName(it, "Schema", "name")
-            objects.add(MyClassType(it.name?:"",it.name?:"",name,it.getType()?:"",it.isNull()))
+            val model = it.getModel()
+            objects.add(MyClassType(it.name?:"",it.name?:"",model.getSchemaDescription(),it.getType()?:"",it.isNull()))
         }
         return objects
     }
