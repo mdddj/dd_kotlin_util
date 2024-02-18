@@ -1,11 +1,11 @@
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.9.0"
-    id("org.jetbrains.intellij") version "1.15.0"
+    id("org.jetbrains.intellij") version "1.16.1"
 }
 
 group = "shop.itbug"
-version = "1.6-SNAPSHOT"
+version = "1.9"
 
 repositories {
     mavenCentral()
@@ -14,9 +14,9 @@ repositories {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("232-EAP-SNAPSHOT")
+    version.set("233-EAP-SNAPSHOT")
     type.set("IU") // Target IDE Platform
-    plugins.set(listOf("org.jetbrains.kotlin","JavaScript"))
+    plugins.set(listOf("org.jetbrains.kotlin"))
 }
 
 tasks {
@@ -30,7 +30,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("232")
-        untilBuild.set("232.*")
+        untilBuild.set("*")
     }
 
 

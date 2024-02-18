@@ -1,6 +1,5 @@
 package shop.itbug.dd_kotlin_util.action
 
-import com.intellij.lang.javascript.JavascriptLanguage
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -26,7 +25,7 @@ class GenerateAntdRequestFunction : AnAction() {
                 "\t\tmethod: '$methodType'" +
                 "\n\t})")
         sb.append("}")
-        e.project?.showCode(sb.toString(),JavascriptLanguage.INSTANCE)
+        e.project?.showCode(sb.toString())
 
     }
 

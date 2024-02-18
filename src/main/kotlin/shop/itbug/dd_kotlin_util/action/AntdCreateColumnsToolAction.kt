@@ -52,9 +52,24 @@ fun KtProperty.getType(): String? {
     return null
 }
 
+fun KtParameter.getParameterType(): String? {
+    val r = this.children.find { it is KtTypeReference }
+    if(r!=null){
+        return PsiTreeUtil.findChildOfType(r,KtUserType::class.java)?.text
+    }
+    return null
+}
+
 /**
  * 是否可空类型
  */
 fun KtProperty.isNull(): Boolean {
+    return PsiTreeUtil.findChildOfType(this,KtNullableType::class.java) != null
+}
+
+/**
+ * 是否可空类型
+ */
+fun KtParameter.isNull(): Boolean {
     return PsiTreeUtil.findChildOfType(this,KtNullableType::class.java) != null
 }

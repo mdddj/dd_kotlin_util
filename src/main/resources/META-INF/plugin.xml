@@ -20,7 +20,6 @@
   ]]></description>
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
-    <depends>JavaScript</depends>
     <depends optional="true" config-file="entity_actions.xml">org.jetbrains.kotlin</depends>
     <extensions defaultExtensionNs="com.intellij">
 
@@ -30,7 +29,6 @@
                 text="创建模块">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="CutCopyPasteGroup"/>
         </action>
-
     </actions>
 
 </idea-plugin>

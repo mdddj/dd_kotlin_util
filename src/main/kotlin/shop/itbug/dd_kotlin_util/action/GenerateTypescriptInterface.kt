@@ -1,6 +1,6 @@
 package shop.itbug.dd_kotlin_util.action
 
-import com.intellij.lang.javascript.JavascriptLanguage
+import com.alibaba.fastjson2.toJSONString
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
@@ -12,9 +12,11 @@ class GenerateTypescriptInterface : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
         val ktClass = e.getKtClass()!!
         val types = KtUtil.getClassTypeList(ktClass)
+        println(types.toJSONString())
         val className = ktClass.name ?: "--"
         val generateTypescriptInterface = types.generateTypescriptInterface(className)
-        e.project?.showCode(generateTypescriptInterface, JavascriptLanguage.INSTANCE)
+        println(generateTypescriptInterface)
+        e.project?.showCode(generateTypescriptInterface)
     }
 
     override fun update(e: AnActionEvent) {

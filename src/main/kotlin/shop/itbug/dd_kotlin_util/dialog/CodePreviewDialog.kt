@@ -8,6 +8,7 @@ import com.intellij.ui.LanguageTextField
 import com.intellij.util.ui.components.BorderLayoutPanel
 import shop.itbug.dd_kotlin_util.util.MyUtil
 import javax.swing.JComponent
+
 fun Project.showCode(codeString: String, language: Language  = PlainTextLanguage.INSTANCE) {
     CodePreviewDialog(this,codeString,language).show()
 }
@@ -20,7 +21,26 @@ class CodePreviewDialog(project: Project, private val codeString: String, langua
         title = "代码预览"
         setOKButtonText("复制代码")
         setCancelButtonText("取消")
+        editor.editor?.settings?.isLineNumbersShown = true
+
+
+
+//        SwingUtilities.invokeLater {
+//                ApplicationManager.getApplication().invokeLaterOnWriteThread{
+//                    WriteCommandAction.runWriteCommandAction(project){
+//                        val psiFile = PsiDocumentManager.getInstance(project).getPsiFile(editor.document)
+//                        psiFile?.let {
+//                            CodeStyleManager.getInstance(project).reformat(it)
+//                        }
+//                    }
+//                }
+//            }
+
+
     }
+
+
+
 
     override fun createCenterPanel(): JComponent {
         return BorderLayoutPanel().apply {
@@ -32,6 +52,8 @@ class CodePreviewDialog(project: Project, private val codeString: String, langua
         MyUtil.copyTextToClipboard(codeString)
         super.doOKAction()
     }
+
+
 
 
 

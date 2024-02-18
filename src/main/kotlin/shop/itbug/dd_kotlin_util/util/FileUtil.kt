@@ -27,7 +27,7 @@ object FileUtil {
     /**
      * 获取顶级包
      */
-     fun getPackageRoot(project: Project, psiDirectory: PsiDirectory): PsiDirectory {
+    private fun getPackageRoot(project: Project, psiDirectory: PsiDirectory): PsiDirectory {
         val manager = PsiDirectoryFactory.getInstance(project)
         var directory: PsiDirectory = psiDirectory
         var parent = directory.parent
@@ -42,7 +42,7 @@ object FileUtil {
     /**
      * 获取包名
      */
-     fun getPackageName(root: PsiDirectory,currDirectory: PsiDirectory): String {
+    private fun getPackageName(root: PsiDirectory,currDirectory: PsiDirectory): String {
         if (root.isEquivalentTo(currDirectory)) return ""
         val rootPath: String = root.virtualFile.path
         val current: String = currDirectory.virtualFile.path

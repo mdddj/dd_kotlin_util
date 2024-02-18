@@ -3,7 +3,9 @@ package shop.itbug.dd_kotlin_util.model
 import com.alibaba.fastjson2.JSONWriter
 import com.alibaba.fastjson2.toJSONString
 import org.jetbrains.kotlin.psi.KtClass
+import org.jetbrains.kotlin.psi.KtProperty
 import shop.itbug.dd_kotlin_util.extend.getModel
+import shop.itbug.dd_kotlin_util.extend.getMyParameterModel
 
 
 fun KotlinPropertiesModel.string(): String {
@@ -47,11 +49,9 @@ fun KotlinPropertiesModel.generateAntdFormItem(): String {
     val textItem =  "\n<ProFormText name={'$name'} label={'${getSchemaDescription()}'} $ruleString />\n"
 
     val checkboxItem = """
-        \n
         <ProFormCheckbox name={'$name'} $ruleString >
             ${getSchemaDescription()}
         </ProFormCheckbox>
-      \n
     """.trimIndent()
 
 
@@ -68,11 +68,19 @@ fun KotlinPropertiesModel.generateAntdFormItem(): String {
 
 ///生成antd表单
 fun KtClass.generateAntdFormString() : String {
-    val properties = this.getProperties()
+    val properties: List<KtProperty> = this.getProperties()
     val sb = StringBuilder()
     properties.forEach {
-        sb.appendLine("\t\t"+it.getModel().generateAntdFormItem())
+        sb.appendLine(it.getModel().generateAntdFormItem())
     }
+
+
+    ///data class
+
+    primaryConstructor?.valueParameterList?.parameters?.forEach { p ->
+        sb.appendLine(p.getMyParameterModel().generateAntdFormItem())
+    }
+
     return """
     <ModalForm>
        $sb

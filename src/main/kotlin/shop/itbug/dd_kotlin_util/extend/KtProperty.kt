@@ -2,21 +2,46 @@ package shop.itbug.dd_kotlin_util.extend
 
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.idea.base.psi.findSingleLiteralStringTemplateText
+import org.jetbrains.kotlin.psi.KtModifierList
+import org.jetbrains.kotlin.psi.KtParameter
 import org.jetbrains.kotlin.psi.KtProperty
 import org.jetbrains.kotlin.psi.KtValueArgumentName
+import shop.itbug.dd_kotlin_util.action.getParameterType
 import shop.itbug.dd_kotlin_util.action.getType
 import shop.itbug.dd_kotlin_util.model.KotlinEnumModel
 import shop.itbug.dd_kotlin_util.model.KotlinPropertiesModel
 
+
+
+///data class properties
+fun KtParameter.getMyParameterModel(): KotlinPropertiesModel {
+    return  KotlinPropertiesModel(
+        isFinal = !this.isVarArg,
+        name = this.nameIdentifier?.text?:"",
+        initValue = "",
+        optionValue = this.typeReference?.text?.endsWith("?") ?: false,
+        valueTypeString = getParameterType(),
+        enums = modifierList.getMyEnums()
+    )
+
+}
+
 fun KtProperty.getModel(): KotlinPropertiesModel {
     val initValueText = if (initializer?.text == "null") null else initializer?.text //初始化值,如果是null则不存在
+    return KotlinPropertiesModel(
+        isFinal = isVar.not(),
+        initValue = initValueText,
+        name = name ?: "",
+        optionValue = initValueText == null,
+        valueTypeString = getType(),
+        enums = modifierList.getMyEnums()
+    )
+}
 
-
+fun KtModifierList?.getMyEnums()  : MutableList<KotlinEnumModel> {
     val enums = mutableListOf<KotlinEnumModel>()
-    //处理枚举
-    if (modifierList != null) {
-        val entries = modifierList?.annotationEntries ?: emptyList()
-        entries.forEach {
+    if (this != null) {
+        annotationEntries.forEach {
             val nameText = it.calleeExpression?.typeReference?.getTypeText()//枚举名字
             val ktValueArgumentName = PsiTreeUtil.findChildOfType(it.valueArgumentList, KtValueArgumentName::class.java)
             val constructorValue =
@@ -49,12 +74,5 @@ fun KtProperty.getModel(): KotlinPropertiesModel {
         }
     }
 
-    return KotlinPropertiesModel(
-        isFinal = isVar.not(),
-        initValue = initValueText,
-        name = name ?: "",
-        optionValue = initValueText == null,
-        valueTypeString = getType(),
-        enums = enums
-    )
+    return enums
 }

@@ -8,9 +8,11 @@ import org.jetbrains.kotlin.psi.KtAnnotationEntry
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtNamedFunction
 import org.jetbrains.kotlin.psi.KtProperty
+import shop.itbug.dd_kotlin_util.action.getParameterType
 import shop.itbug.dd_kotlin_util.action.getType
 import shop.itbug.dd_kotlin_util.action.isNull
 import shop.itbug.dd_kotlin_util.extend.getModel
+import shop.itbug.dd_kotlin_util.extend.getMyParameterModel
 import shop.itbug.dd_kotlin_util.model.MyClassType
 import shop.itbug.dd_kotlin_util.model.getSchemaDescription
 
@@ -94,6 +96,21 @@ object KtUtil {
         properties.forEach {
             val model = it.getModel()
             objects.add(MyClassType(it.name?:"",it.name?:"",model.getSchemaDescription(),it.getType()?:"",it.isNull()))
+        }
+        println(ktClass.primaryConstructor?.valueParameterList?.parameters)
+        ktClass.primaryConstructor?.valueParameterList?.parameters?.forEach { item ->
+            run {
+                val model = item.getMyParameterModel()
+                objects.add(
+                    MyClassType(
+                        item.name ?: "",
+                        item.name ?: "",
+                        model.getSchemaDescription(),
+                        item.getParameterType() ?: "",
+                        item.isNull()
+                    )
+                )
+            }
         }
         return objects
     }
