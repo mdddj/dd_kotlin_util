@@ -14,7 +14,29 @@ import shop.itbug.dd_kotlin_util.action.isNull
 import shop.itbug.dd_kotlin_util.extend.getModel
 import shop.itbug.dd_kotlin_util.extend.getMyParameterModel
 import shop.itbug.dd_kotlin_util.model.MyClassType
+import shop.itbug.dd_kotlin_util.model.MyException
+import shop.itbug.dd_kotlin_util.model.generateTypescriptInterface
 import shop.itbug.dd_kotlin_util.model.getSchemaDescription
+
+/// kt class 对象函数
+
+//获取class类名
+val KtClass.getClassName: String get() = name ?: throw MyException("获取类型失败")
+
+//获取typescript模型
+val KtClass.getTypescriptInterface: String?
+    get() {
+        try {
+            val classTypeList = KtUtil.getClassTypeList(this)
+            return classTypeList.generateTypescriptInterface(getClassName)
+        } catch (e: Exception) {
+            return null
+        }
+    }
+
+
+/// kt 函数
+
 
 object KtUtil {
 
@@ -49,28 +71,31 @@ object KtUtil {
     /**
      * 获取 springboot api类型注解
      */
-    fun findMappingAnnotationEntries(namedFunction: KtNamedFunction) : KtAnnotationEntry? {
-        val mappingTexts = listOf("PostMapping","GetMapping","DeleteMapping","PutMapping","PatchMapping")
+    fun findMappingAnnotationEntries(namedFunction: KtNamedFunction): KtAnnotationEntry? {
+        val mappingTexts = listOf("PostMapping", "GetMapping", "DeleteMapping", "PutMapping", "PatchMapping")
         val entries = namedFunction.annotationEntries
-        if(entries.isEmpty()) return null
+        if (entries.isEmpty()) return null
         return entries.find { mappingTexts.contains(it.shortName.toString()) }
     }
 
-    private fun findParentClassRequestMappingApi(namedFunction: KtNamedFunction) : String? {
+    private fun findParentClassRequestMappingApi(namedFunction: KtNamedFunction): String? {
         val parent = PsiTreeUtil.findFirstParent(namedFunction) { it is KtClass } as? KtClass
-        if(parent!=null){
-            findAnnotationEntries(parent.annotationEntries) {it.shortName?.toString() == "RequestMapping"}?.apply {
+        if (parent != null) {
+            findAnnotationEntries(parent.annotationEntries) { it.shortName?.toString() == "RequestMapping" }?.apply {
                 val args = this.valueArguments
-                if(args.isNotEmpty()){
-                   return args.first().findSingleLiteralStringTemplateText()
+                if (args.isNotEmpty()) {
+                    return args.first().findSingleLiteralStringTemplateText()
                 }
             }
         }
         return null
     }
 
-    private fun findAnnotationEntries(entriesList:List<KtAnnotationEntry>, match: (entries: KtAnnotationEntry) -> Boolean) : KtAnnotationEntry? {
-        return entriesList.find {  match.invoke(it)  }
+    private fun findAnnotationEntries(
+        entriesList: List<KtAnnotationEntry>,
+        match: (entries: KtAnnotationEntry) -> Boolean
+    ): KtAnnotationEntry? {
+        return entriesList.find { match.invoke(it) }
     }
 
 
@@ -80,9 +105,9 @@ object KtUtil {
     fun getApiWithKtFun(ktNamedFunction: KtNamedFunction): String? {
         val entry = findMappingAnnotationEntries(ktNamedFunction)!!
         val valueArguments = entry.valueArguments
-        val apiTexts = valueArguments.map { it.findSingleLiteralStringTemplateText()?:"" }.filter { it.isNotBlank() }
+        val apiTexts = valueArguments.map { it.findSingleLiteralStringTemplateText() ?: "" }.filter { it.isNotBlank() }
         val classApiText = findParentClassRequestMappingApi(ktNamedFunction) ?: ""
-        if(apiTexts.isNotEmpty()) {
+        if (apiTexts.isNotEmpty()) {
             val api = apiTexts.first()
             return classApiText + api
         }
@@ -90,12 +115,20 @@ object KtUtil {
     }
 
 
-    fun getClassTypeList(ktClass: KtClass) :  MutableList<MyClassType>{
+    fun getClassTypeList(ktClass: KtClass): MutableList<MyClassType> {
         val properties = ktClass.getProperties()
         val objects = mutableListOf<MyClassType>()
         properties.forEach {
             val model = it.getModel()
-            objects.add(MyClassType(it.name?:"",it.name?:"",model.getSchemaDescription(),it.getType()?:"",it.isNull()))
+            objects.add(
+                MyClassType(
+                    it.name ?: "",
+                    it.name ?: "",
+                    model.getSchemaDescription(),
+                    it.getType() ?: "",
+                    it.isNull()
+                )
+            )
         }
         println(ktClass.primaryConstructor?.valueParameterList?.parameters)
         ktClass.primaryConstructor?.valueParameterList?.parameters?.forEach { item ->

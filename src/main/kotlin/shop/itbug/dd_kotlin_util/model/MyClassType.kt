@@ -39,7 +39,7 @@ fun MyClassType.generateAttr(): String {
 
 fun MutableList<MyClassType>.generateTypescriptInterface(name: String): String {
     val sb = StringBuilder()
-    sb.append("interface $name {\n")
+    sb.append("export interface $name {\n")
     forEach {
         sb.appendLine(it.generateAttr())
     }

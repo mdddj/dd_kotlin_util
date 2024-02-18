@@ -1,11 +1,18 @@
 package shop.itbug.dd_kotlin_util.model
 
+import cn.hutool.core.lang.Dict
+import cn.hutool.extra.template.TemplateConfig
+import cn.hutool.extra.template.TemplateEngine
+import cn.hutool.extra.template.engine.freemarker.FreemarkerEngine
 import com.alibaba.fastjson2.JSONWriter
 import com.alibaba.fastjson2.toJSONString
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtProperty
 import shop.itbug.dd_kotlin_util.extend.getModel
 import shop.itbug.dd_kotlin_util.extend.getMyParameterModel
+import shop.itbug.dd_kotlin_util.util.FileUtil
+import shop.itbug.dd_kotlin_util.util.getClassName
+import shop.itbug.dd_kotlin_util.util.getTypescriptInterface
 
 
 fun KotlinPropertiesModel.string(): String {
@@ -46,7 +53,7 @@ fun KotlinPropertiesModel.generateAntdFormItem(): String {
     }
     val ruleString = if (rules.isNotEmpty()) "rules={${rules.toJSONString(JSONWriter.Feature.PrettyFormat)}}" else ""
 
-    val textItem =  "\n<ProFormText name={'$name'} label={'${getSchemaDescription()}'} $ruleString />\n"
+    val textItem = "<ProFormText name={'$name'} label={'${getSchemaDescription()}'} $ruleString />"
 
     val checkboxItem = """
         <ProFormCheckbox name={'$name'} $ruleString >
@@ -56,18 +63,17 @@ fun KotlinPropertiesModel.generateAntdFormItem(): String {
 
 
     val dataItem = """
-        <ProFormDatePicker name={'$name'} label={'${getSchemaDescription()}'} $ruleString />
-    """.trimIndent()
+    <ProFormDatePicker name={'$name'} label={'${getSchemaDescription()}'} $ruleString />""".trimIndent()
 
-    return when(getTypeScriptType()){
+    return when (getTypeScriptType()) {
         TypescriptValType.Boolean -> checkboxItem
         TypescriptValType.Date -> dataItem
         else -> textItem
-    }
+    }.prependIndent("\t\t")
 }
 
 ///生成antd表单
-fun KtClass.generateAntdFormString() : String {
+fun KtClass.generateAntdFormString(): String {
     val properties: List<KtProperty> = this.getProperties()
     val sb = StringBuilder()
     properties.forEach {
@@ -81,10 +87,17 @@ fun KtClass.generateAntdFormString() : String {
         sb.appendLine(p.getMyParameterModel().generateAntdFormItem())
     }
 
+
+    val config = TemplateConfig()
+    val engine: TemplateEngine = FreemarkerEngine(config)
+    val template = engine.getTemplate(FileUtil.getAntdFormTempTxt)
     return """
-    <ModalForm>
-       $sb
-    </ModalForm>
+${
+        template.render(
+            Dict.create().set("attrItemsText", sb).set("className", this.getClassName)
+                .set("interface", this.getTypescriptInterface)
+        )
+    }
     """.trimIndent()
 }
 

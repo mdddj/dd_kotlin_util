@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "shop.itbug"
-version = "1.9"
+version = "2.0"
 
 repositories {
     mavenCentral()
@@ -14,9 +14,9 @@ repositories {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("233-EAP-SNAPSHOT")
+    version.set("LATEST-EAP-SNAPSHOT")
     type.set("IU") // Target IDE Platform
-    plugins.set(listOf("org.jetbrains.kotlin"))
+    plugins.set(listOf("org.jetbrains.kotlin","JavaScript"))
 }
 
 tasks {
@@ -30,9 +30,13 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("232")
-        untilBuild.set("*")
+//        untilBuild.set("*")
     }
 
+    runIde {
+        autoReloadPlugins.set(true)
+        jvmArgs = listOf("-XX:+AllowEnhancedClassRedefinition")
+    }
 
     signPlugin {
         certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))

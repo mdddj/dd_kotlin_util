@@ -19,7 +19,7 @@ fun Project.showGenerateModuleConfigurationDialog(event: AnActionEvent) {
 /**
  * 生成module的配置弹窗
  */
-class GenerateModuleConfigurationDialog(private val project: Project, private val event: AnActionEvent) :
+class GenerateModuleConfigurationDialog(private val project: Project, event: AnActionEvent) :
     DialogWrapper(project) {
 
 

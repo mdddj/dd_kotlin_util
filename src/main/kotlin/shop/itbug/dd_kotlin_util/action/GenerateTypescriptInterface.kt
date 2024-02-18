@@ -1,26 +1,20 @@
 package shop.itbug.dd_kotlin_util.action
 
-import com.alibaba.fastjson2.toJSONString
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import shop.itbug.dd_kotlin_util.dialog.showCode
-import shop.itbug.dd_kotlin_util.model.generateTypescriptInterface
-import shop.itbug.dd_kotlin_util.util.KtUtil
+import shop.itbug.dd_kotlin_util.dialog.MyTypeScriptCodeShow
+import shop.itbug.dd_kotlin_util.util.getTypescriptInterface
 
 class GenerateTypescriptInterface : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        val ktClass = e.getKtClass()!!
-        val types = KtUtil.getClassTypeList(ktClass)
-        println(types.toJSONString())
-        val className = ktClass.name ?: "--"
-        val generateTypescriptInterface = types.generateTypescriptInterface(className)
-        println(generateTypescriptInterface)
-        e.project?.showCode(generateTypescriptInterface)
+        e.getKtClass()?.let {
+            it.getTypescriptInterface?.let { interfaceText -> MyTypeScriptCodeShow(e.project!!, interfaceText).show() }
+        }
     }
 
     override fun update(e: AnActionEvent) {
-        e.presentation.isEnabled = e.getKtClass()!=null
+        e.presentation.isEnabled = e.getKtClass() != null && e.project != null
         super.update(e)
     }
 

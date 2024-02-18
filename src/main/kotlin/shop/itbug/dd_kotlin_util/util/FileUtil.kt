@@ -9,6 +9,11 @@ import org.apache.commons.io.IOUtils
 object FileUtil {
 
 
+    val getAntdFormTempTxt: String
+        get() {
+            return loadTemplateFile("ts/form.txt")
+        }
+
     /**
      * 加载模板文件
      */
@@ -42,7 +47,7 @@ object FileUtil {
     /**
      * 获取包名
      */
-    private fun getPackageName(root: PsiDirectory,currDirectory: PsiDirectory): String {
+    private fun getPackageName(root: PsiDirectory, currDirectory: PsiDirectory): String {
         if (root.isEquivalentTo(currDirectory)) return ""
         val rootPath: String = root.virtualFile.path
         val current: String = currDirectory.virtualFile.path
@@ -54,9 +59,9 @@ object FileUtil {
     /**
      * 获取包名
      */
-    fun getPackageName(project: Project,psiDirectory: PsiDirectory): String{
+    fun getPackageName(project: Project, psiDirectory: PsiDirectory): String {
         val rootDirectory = getPackageRoot(project, psiDirectory)
-        return getPackageName(rootDirectory,psiDirectory)
+        return getPackageName(rootDirectory, psiDirectory)
     }
 
 
