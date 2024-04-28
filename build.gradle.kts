@@ -1,23 +1,38 @@
+import org.jetbrains.changelog.Changelog
+import java.util.*
+
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.9.0"
     id("org.jetbrains.intellij") version "1.16.1"
+    id("org.jetbrains.changelog") version "2.2.0"
 }
 
 group = "shop.itbug"
-version = "2.2"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
 }
 
-// Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     version.set("LATEST-EAP-SNAPSHOT")
-    type.set("IU") // Target IDE Platform
+    type.set("IU")
     plugins.set(listOf("org.jetbrains.kotlin","JavaScript"))
 }
+
+
+val changeLog = provider {
+    changelog.renderItem(
+        changelog
+            .getOrNull(project.version as String) ?: changelog.getUnreleased()
+            .withHeader(false)
+            .withEmptySections(false),
+        Changelog.OutputType.HTML
+    )
+}
+
+println("更新日志:\n${changeLog.get()}\n")
 
 tasks {
     withType<JavaCompile> {
@@ -30,7 +45,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("232")
-//        untilBuild.set("*")
+        changeNotes.set(changeLog)
     }
 
     runIde {
@@ -39,13 +54,13 @@ tasks {
     }
 
     signPlugin {
-        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(System.getenv("PRIVATE_KEY"))
-        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
+        certificateChain.set(System.getenv("certificateChain".uppercase(Locale.getDefault())))
+        privateKey.set(System.getenv("privateKey".uppercase(Locale.getDefault())))
+        password.set(System.getenv("password".uppercase(Locale.getDefault())))
     }
 
     publishPlugin {
-        token.set(System.getenv("PUBLISH_TOKEN"))
+        token.set(System.getenv("PUSH_TOKEN"))
     }
 
     dependencies {
@@ -56,4 +71,10 @@ tasks {
 
     listProductsReleases {
     }
+}
+
+changelog {
+    version = project.version as String
+    path = file("CHANGELOG.md").canonicalPath
+    groups.empty()
 }

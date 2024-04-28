@@ -40,3 +40,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+chain.crt
+private.pem
+private_encrypted.pem

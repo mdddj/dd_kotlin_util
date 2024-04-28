@@ -1,31 +1,17 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>shop.itbug.dd_kotlin_util</id>
-
-    <!-- Public plugin name should be written in Title Case.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Dd_kotlin_util</name>
-
-    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <name>KotlinSpringbootUtil</name>
     <vendor email="hlxsmail@gmail.com" url="https://itbug.shop">梁典典</vendor>
-
-    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-        Liang Diandian's automatic code generation tool, but only supports kotlin
-        1. Automatically generate entity module classes
-        2...
+This Kotlin plugin tool is a powerful development aid crafted for swift batch code generation of Spring Boot JPA, Controller, Service, and more. Whether you're building large-scale projects or prototyping rapidly, it saves developers significant time and effort. Additionally, it offers the functionality to seamlessly convert Kotlin code into TypeScript, streamlining code conversion for projects employing front-end and back-end separation. With its intuitive interface and flexible configuration options, this plugin tool becomes an indispensable asset in your Kotlin development arsenal.
   ]]></description>
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
     <depends>JavaScript</depends>
     <depends optional="true" config-file="entity_actions.xml">org.jetbrains.kotlin</depends>
     <extensions defaultExtensionNs="com.intellij">
-
     </extensions>
-    <actions>xxxx
+    <actions>
         <action id="GeneraModuleAction" class="shop.itbug.dd_kotlin_util.action.GeneraModuleAction"
                 text="创建模块">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="CutCopyPasteGroup"/>
