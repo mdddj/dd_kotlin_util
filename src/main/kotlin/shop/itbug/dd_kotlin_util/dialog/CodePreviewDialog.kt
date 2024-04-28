@@ -1,6 +1,8 @@
 package shop.itbug.dd_kotlin_util.dialog
 
 import com.intellij.lang.Language
+import com.intellij.openapi.editor.colors.EditorColorsManager
+import com.intellij.openapi.editor.colors.EditorFontType
 import com.intellij.openapi.fileTypes.PlainTextLanguage
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
@@ -8,6 +10,7 @@ import com.intellij.ui.LanguageTextField
 import com.intellij.util.ui.components.BorderLayoutPanel
 import shop.itbug.dd_kotlin_util.component.MyJavaScriptTextField
 import shop.itbug.dd_kotlin_util.util.MyUtil
+import java.awt.Font
 import javax.swing.JComponent
 
 fun Project.showCode(codeString: String, language: Language = PlainTextLanguage.INSTANCE) {
@@ -21,12 +24,18 @@ class CodePreviewDialog(
 ) : DialogWrapper(project) {
     private val editor = LanguageTextField(language, project, codeString, false)
 
+    private fun getFont(): Font {
+        val font = EditorColorsManager.getInstance().globalScheme.getFont(EditorFontType.PLAIN)
+        return font
+    }
+
     init {
         super.init()
         title = "代码预览"
         setOKButtonText("复制代码")
         setCancelButtonText("取消")
         editor.editor?.settings?.isLineNumbersShown = true
+        editor.font = getFont()
     }
 
     override fun createCenterPanel(): JComponent {
