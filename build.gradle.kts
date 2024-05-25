@@ -67,7 +67,7 @@ tasks {
     }
 
     publishPlugin {
-        token.set(System.getenv("PUSH_TOKEN"))
+        token.set(System.getenv("PUBLISH_TOKEN"))
     }
 
     dependencies {
