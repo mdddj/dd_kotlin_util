@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>shop.itbug.dd_kotlin_util</id>
-    <name>KotlinSpringbootUtil</name>
+    <name>KotlinSpringbootTool</name>
     <vendor email="hlxsmail@gmail.com" url="https://itbug.shop">梁典典</vendor>
     <description><![CDATA[
 This Kotlin plugin tool is a powerful development aid crafted for swift batch code generation of Spring Boot JPA, Controller, Service, and more. Whether you're building large-scale projects or prototyping rapidly, it saves developers significant time and effort. Additionally, it offers the functionality to seamlessly convert Kotlin code into TypeScript, streamlining code conversion for projects employing front-end and back-end separation. With its intuitive interface and flexible configuration options, this plugin tool becomes an indispensable asset in your Kotlin development arsenal.

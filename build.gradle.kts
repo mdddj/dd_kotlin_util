@@ -1,22 +1,25 @@
 import org.jetbrains.changelog.Changelog
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import java.util.*
 
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.0"
+    id("org.jetbrains.kotlin.jvm") version "2.0.0"
     id("org.jetbrains.intellij") version "1.16.1"
     id("org.jetbrains.changelog") version "2.2.0"
 }
 
 group = "shop.itbug"
-version = "1.0.0"
+version = "1.0.1"
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 intellij {
-    version.set("LATEST-EAP-SNAPSHOT")
+    version.set("241-EAP-SNAPSHOT")
     type.set("IU")
     plugins.set(listOf("org.jetbrains.kotlin","JavaScript"))
 }
@@ -32,6 +35,7 @@ val changeLog = provider {
     )
 }
 
+
 println("更新日志:\n${changeLog.get()}\n")
 
 tasks {
@@ -40,7 +44,10 @@ tasks {
         targetCompatibility = "17"
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            languageVersion.set(KotlinVersion.KOTLIN_2_0)
+        }
     }
 
     patchPluginXml {
