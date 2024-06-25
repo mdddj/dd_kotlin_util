@@ -38,13 +38,7 @@ class GenerateModuleConfigurationDialog(private val project: Project, event: AnA
     override fun createCenterPanel(): JComponent {
         contentPanel = panel {
             row("类名") {
-                textField().bindText(configuration::className).validationInfo {
-                    val empty = it.text.isEmpty()
-                    if (empty) {
-                         this.error("")
-                    }
-                     this.warning("").withOKEnabled()
-                }
+                textField().bindText(configuration::className)
             }
             row("包名") {
                 textField().bindText(configuration::packageName)

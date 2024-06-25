@@ -11,7 +11,7 @@ jobs:
 
   # 准备插件并将其发布到 JetBrains Marketplace 存储库
   release:
-    name: Publish Plugin
+    name: 准备插件并将其发布到 JetBrains Marketplace 存储库
     runs-on: ubuntu-latest
     permissions:
       contents: write

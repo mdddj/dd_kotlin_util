@@ -6,16 +6,27 @@
 This Kotlin plugin tool is a powerful development aid crafted for swift batch code generation of Spring Boot JPA, Controller, Service, and more. Whether you're building large-scale projects or prototyping rapidly, it saves developers significant time and effort. Additionally, it offers the functionality to seamlessly convert Kotlin code into TypeScript, streamlining code conversion for projects employing front-end and back-end separation. With its intuitive interface and flexible configuration options, this plugin tool becomes an indispensable asset in your Kotlin development arsenal.
   ]]></description>
     <depends>com.intellij.modules.platform</depends>
-    <depends>org.jetbrains.kotlin</depends>
     <depends>JavaScript</depends>
-    <depends optional="true" config-file="entity_actions.xml">org.jetbrains.kotlin</depends>
+    <depends>org.jetbrains.kotlin</depends>
     <extensions defaultExtensionNs="com.intellij">
+        <annotator language="kotlin" implementationClass="shop.itbug.dd_kotlin_util.annotator.FixBeanProperties" />
+        <annotator language="kotlin" implementationClass="shop.itbug.dd_kotlin_util.annotator.RemoveAllNullType" />
     </extensions>
     <actions>
         <action id="GeneraModuleAction" class="shop.itbug.dd_kotlin_util.action.GeneraModuleAction"
                 text="创建模块">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="CutCopyPasteGroup"/>
         </action>
+    </actions>
+    <actions>
+        <group id="antd entity util" popup="true" text="Antd Utils">
+            <action id="create table columns" class="shop.itbug.dd_kotlin_util.action.AntdCreateColumnsToolAction" text="生成TableColumns" />
+            <action id="generate antd request " class="shop.itbug.dd_kotlin_util.action.GenerateAntdRequestFunction" text="生成Antd请求" />
+            <action id="generate typescript interface" class="shop.itbug.dd_kotlin_util.action.GenerateTypescriptInterface" text="生成 Typescript 模型"/>
+            <action id="KtClassGenerateAntdFormAction"
+                    class="shop.itbug.dd_kotlin_util.action.KtClassGenerateAntdFormAction" text="生成Antd Pro表单"/>
+            <add-to-group group-id="EditorPopupMenu"/>
+        </group>
     </actions>
 
 </idea-plugin>
