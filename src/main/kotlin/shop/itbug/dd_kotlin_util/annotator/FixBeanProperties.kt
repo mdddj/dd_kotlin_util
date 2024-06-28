@@ -15,7 +15,6 @@ import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.psi.search.LocalSearchScope
 import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.psi.util.elementType
-import com.intellij.psi.util.lastLeaf
 import org.jetbrains.kotlin.KtNodeTypes
 import org.jetbrains.kotlin.psi.KtOperationReferenceExpression
 import org.jetbrains.kotlin.psi.KtProperty
@@ -26,6 +25,7 @@ import shop.itbug.dd_kotlin_util.icons.DDIcon
 import shop.itbug.dd_kotlin_util.util.MyKtPsiFactory
 import shop.itbug.dd_kotlin_util.util.filterByType
 import shop.itbug.dd_kotlin_util.util.findByTypeAndText
+import shop.itbug.dd_kotlin_util.util.findLastLeafChild
 import javax.swing.Icon
 
 class FixBeanProperties : Annotator, DumbAware {
@@ -72,12 +72,11 @@ class FixBeanProperties : Annotator, DumbAware {
             // 3替换val
             element.filterByType<LeafPsiElement>().find { it.text == "val" }?.let {
                 val lateinitPsi = myFactory.createLateinit()
-
                 /// 添加lateinit
                 val ws = factory.createWhiteSpace(" ")
                 element.modifierList?.let { modis ->
-                    modis.addAfter(ws, modis.lastLeaf())
-                    modis.addAfter(lateinitPsi, modis.lastLeaf())
+                    modis.addAfter(ws, modis.findLastLeafChild())
+                    modis.addAfter(lateinitPsi, modis.findLastLeafChild())
                 }
 
                 ///替换var

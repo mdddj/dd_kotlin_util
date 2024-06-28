@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.3] - 2024-06-25
+## [1.0.5] - 2024-06-28
 
 - 添加java转kotlin自动修复功能,@Autowired,和 @Resource, ?? -> lateinit var
 - 添加kotlin接口和class可空转不可空一键修复功能
