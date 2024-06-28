@@ -11,9 +11,10 @@ import com.intellij.openapi.util.Iconable
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import org.jetbrains.kotlin.psi.KtClass
-import org.jetbrains.kotlin.psi.KtSuperTypeListEntry
+import org.jetbrains.kotlin.psi.KtNullableType
 import shop.itbug.dd_kotlin_util.help.helper
 import shop.itbug.dd_kotlin_util.icons.DDIcon
+import shop.itbug.dd_kotlin_util.util.filterByType
 import javax.swing.Icon
 
 
@@ -26,16 +27,15 @@ class RemoveAllNullType : Annotator, DumbAware, Iconable {
 
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
         if (element is KtClass) {
-            println("name psi : ${element.nameIdentifier?.text}")
             val namePsi = element.nameIdentifier ?: return
-            holder.newAnnotation(HighlightSeverity.INFORMATION,"Set all nullable types to non-nullable")
+            holder.newAnnotation(HighlightSeverity.INFORMATION, "Set all nullable types to non-nullable")
                 .range(namePsi)
                 .withFix(Fix(element))
                 .create()
         }
     }
 
-    private class Fix(val ktClass: KtClass): BaseIntentionAction(),Iconable  {
+    private class Fix(val ktClass: KtClass) : BaseIntentionAction(), Iconable {
         override fun getFamilyName(): String {
             return "Set all nullable types to non-nullable"
         }
@@ -51,16 +51,13 @@ class RemoveAllNullType : Annotator, DumbAware, Iconable {
         override fun invoke(project: Project, editor: Editor?, file: PsiFile?) {
             val functions = ktClass.body?.functions ?: emptyList()
             functions.forEach {
-                it.valueParameterList?.parameters?.forEach { prop ->
-                    prop.typeReference?.helper?.nullableRemove()
-                }
-                it.typeReference?.helper?.nullableRemove()
+                it.filterByType<KtNullableType>()
+                    .forEach { nullablePsiElement -> nullablePsiElement.helper.nullableRemove() }
             }
-
-            ktClass.superTypeListEntries.forEach { type: KtSuperTypeListEntry ->
-                type.typeReference?.helper?.nullableRemove()
+            ktClass.getSuperTypeList()?.let {
+                it.filterByType<KtNullableType>()
+                    .forEach { nullablePsiElement -> nullablePsiElement.helper.nullableRemove() }
             }
-
         }
 
         override fun getIcon(flags: Int): Icon {

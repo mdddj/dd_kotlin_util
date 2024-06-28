@@ -1,30 +1,45 @@
 package shop.itbug.dd_kotlin_util.help
 
+import com.intellij.psi.PsiElement
+import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.util.IncorrectOperationException
 import org.jetbrains.kotlin.psi.KtNullableType
 import org.jetbrains.kotlin.psi.KtPsiFactory
-import org.jetbrains.kotlin.psi.KtTypeReference
 import org.jetbrains.kotlin.psi.KtUserType
 
-val KtTypeReference.helper: KtTypeHelper get() = KtTypeHelper(this)
+val KtNullableType.helper: KtNullableTypeHelper get() = KtNullableTypeHelper(this)
 
 ///类型转换帮助类
-class KtTypeHelper(private val element: KtTypeReference) {
+class KtNullableTypeHelper(private val element: KtNullableType) {
     private val factory = KtPsiFactory(element.project)
 
-    //可空替换为不可空
     fun nullableRemove() {
-        when (val ele = element.firstChild) {
-            is KtNullableType -> {
-                val typeText = ele.firstChild.text
-                val newType = factory.createType(typeText)
-                element.replace(newType)
-            }
+        element.fix()
+    }
 
-            is KtUserType -> {
-                ele.typeArgumentsAsTypes.forEach { ref: KtTypeReference ->
-                    ref.helper.nullableRemove()
+    private fun checkChildElement(checkElement: PsiElement) {
+        val findAll = PsiTreeUtil.findChildrenOfAnyType(checkElement, KtNullableType::class.java)
+        findAll.forEach {
+            it.fix()
+        }
+    }
+
+    private fun KtNullableType.fix() {
+        findUserType()?.let { userType ->
+            run {
+                if (text != userType.text) {
+                    val newElement = factory.createType(userType.text)
+                    try {
+                        val newInsertElement = this.replace(newElement)
+                        checkChildElement(newInsertElement)
+                    } catch (_: IncorrectOperationException) { }
                 }
             }
         }
     }
+
+    private fun KtNullableType.findUserType(): KtUserType? {
+        return PsiTreeUtil.findChildOfAnyType(this, KtUserType::class.java)
+    }
 }
+
