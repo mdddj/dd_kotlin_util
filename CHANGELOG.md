@@ -1,5 +1,10 @@
 # Changelog
 
+
+## [1.0.6] - 2024-07-08
+
+- 添加QueryMapper转KtQueryMapper工具
+
 ## [1.0.5] - 2024-06-28
 
 - 添加java转kotlin自动修复功能,@Autowired,和 @Resource, ?? -> lateinit var
