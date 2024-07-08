@@ -1,6 +1,5 @@
 package shop.itbug.dd_kotlin_util.action
 
-import cn.hutool.json.JSONUtil
 import com.intellij.json.JsonLanguage
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
@@ -10,6 +9,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.psi.*
 import shop.itbug.dd_kotlin_util.dialog.showCode
 import shop.itbug.dd_kotlin_util.util.KtUtil
+import shop.itbug.dd_kotlin_util.util.MyUtil
 
 data class ColumnTypeObject(val key: String,val dataIndex: String,val title: String)
 
@@ -17,10 +17,9 @@ data class ColumnTypeObject(val key: String,val dataIndex: String,val title: Str
 ///生成表格列
 class AntdCreateColumnsToolAction : AnAction(){
 
-
     override fun actionPerformed(e: AnActionEvent) {
         val objects = KtUtil.getClassTypeList(e.getKtClass()!!).map { ColumnTypeObject(it.key,it.dataIndex,it.chineseName) }
-        val string = JSONUtil.toJsonPrettyStr(objects)
+        val string = MyUtil.getPrettyJson(objects)
         e.project?.showCode(string,JsonLanguage.INSTANCE)
     }
 

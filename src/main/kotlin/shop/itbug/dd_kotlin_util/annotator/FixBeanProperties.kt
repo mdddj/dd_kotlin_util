@@ -10,10 +10,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Iconable
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiReference
 import com.intellij.psi.impl.source.tree.LeafPsiElement
-import com.intellij.psi.search.LocalSearchScope
-import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.psi.util.elementType
 import org.jetbrains.kotlin.KtNodeTypes
 import org.jetbrains.kotlin.psi.KtOperationReferenceExpression
@@ -22,10 +19,7 @@ import org.jetbrains.kotlin.psi.KtPsiFactory
 import org.jetbrains.kotlin.psi.psiUtil.prevLeaf
 import shop.itbug.dd_kotlin_util.help.helper
 import shop.itbug.dd_kotlin_util.icons.DDIcon
-import shop.itbug.dd_kotlin_util.util.MyKtPsiFactory
-import shop.itbug.dd_kotlin_util.util.filterByType
-import shop.itbug.dd_kotlin_util.util.findByTypeAndText
-import shop.itbug.dd_kotlin_util.util.findLastLeafChild
+import shop.itbug.dd_kotlin_util.util.*
 import javax.swing.Icon
 
 class FixBeanProperties : Annotator, DumbAware {
@@ -89,8 +83,7 @@ class FixBeanProperties : Annotator, DumbAware {
 
             //======= 修复双!!号
             if (file != null) {
-                val find: MutableCollection<PsiReference> =
-                    ReferencesSearch.search(element, LocalSearchScope(file)).findAll()
+                val find = file.getUseAge(element)
                 find.forEach { ele ->
                     when (val e = ele.element.nextSibling) {
                         is KtOperationReferenceExpression -> {
