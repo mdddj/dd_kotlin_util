@@ -2,9 +2,8 @@ package shop.itbug.dd_kotlin_util.util
 
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
-import org.jetbrains.kotlin.psi.KtDotQualifiedExpression
-import org.jetbrains.kotlin.psi.KtNameReferenceExpression
-import org.jetbrains.kotlin.psi.KtPsiFactory
+import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.resolve.ImportPath
 
 
 class Test {
@@ -30,6 +29,14 @@ class MyKtPsiFactory(val project: Project) {
         return factory.createParameter("lateinit var test: String").modifierList?.firstChild ?: throw CreatePsiElementException("创建lateinit节点失败")
     }
 
+    fun createCallExpression(text: String): KtCallExpression {
+        return factory.createProperty("var t = $text").findFirstChild<KtCallExpression>()!!
+    }
+
+    fun createImport(text: String): KtImportDirective {
+        return factory.createImportDirective(ImportPath.fromString(text))
+    }
+
     fun createNameReferenceExpression(name: String): KtNameReferenceExpression {
         val clazz = factory.createClass("""
             class Test {
@@ -42,5 +49,12 @@ class MyKtPsiFactory(val project: Project) {
         return clazz.body?.functions?.first()?.bodyBlockExpression?.filterByType<KtDotQualifiedExpression>()?.first()?.firstChild as KtNameReferenceExpression
     }
 
+    fun createArgList(text: String): KtValueArgument {
+        return factory.createArgument(text)
+    }
+
+    fun createArgumentList(text: String): KtValueArgumentList {
+        return factory.createCallArguments(text)
+    }
 
 }

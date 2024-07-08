@@ -8,12 +8,11 @@ import java.util.*
 plugins {
     kotlin("jvm") version "2.0.0"
     id("org.jetbrains.changelog") version "2.2.0"
-    id("org.jetbrains.intellij.platform") version "2.0.0-beta7"
-
+    id("org.jetbrains.intellij.platform") version "2.0.0-beta8"
 }
 
 group = "shop.itbug"
-version = "1.0.5"
+version = "1.0.6"
 
 repositories {
     mavenCentral()
@@ -77,25 +76,13 @@ tasks {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
 
-    dependencies {
-        implementation("cn.hutool:hutool-all:5.8.15")
-        implementation("com.alibaba.fastjson2:fastjson2:2.0.25")
-        implementation("com.alibaba.fastjson2:fastjson2-kotlin:2.0.25")
-    }
-
 }
 
 intellijPlatform {
     verifyPlugin {
         ides {
-//            recommended()
             local(file("/Applications/IntelliJ IDEA Ultimate.app"))
             local(file("/Users/ldd/Applications/IntelliJ IDEA Ultimate.app"))
-//            select {
-//                types = listOf(IntelliJPlatformType.IntellijIdeaUltimate)
-//                channels = listOf(ProductRelease.Channel.RELEASE, ProductRelease.Channel.EAP)
-//                sinceBuild = "232"
-//            }
         }
     }
 }

@@ -1,22 +1,20 @@
 package shop.itbug.dd_kotlin_util.model
 
-import cn.hutool.core.lang.Dict
-import cn.hutool.extra.template.TemplateConfig
-import cn.hutool.extra.template.TemplateEngine
-import cn.hutool.extra.template.engine.freemarker.FreemarkerEngine
-import com.alibaba.fastjson2.JSONWriter
-import com.alibaba.fastjson2.toJSONString
+import org.apache.velocity.VelocityContext
+import org.apache.velocity.app.VelocityEngine
 import org.jetbrains.kotlin.psi.KtClass
 import org.jetbrains.kotlin.psi.KtProperty
 import shop.itbug.dd_kotlin_util.extend.getModel
 import shop.itbug.dd_kotlin_util.extend.getMyParameterModel
 import shop.itbug.dd_kotlin_util.util.FileUtil
+import shop.itbug.dd_kotlin_util.util.MyUtil
 import shop.itbug.dd_kotlin_util.util.getClassName
 import shop.itbug.dd_kotlin_util.util.getTypescriptInterface
+import java.io.StringWriter
 
 
 fun KotlinPropertiesModel.string(): String {
-    return this.toJSONString(JSONWriter.Feature.PrettyFormat)
+    return MyUtil.getPrettyJson(this)
 }
 
 
@@ -51,7 +49,7 @@ fun KotlinPropertiesModel.generateAntdFormItem(): String {
     if (!optionValue) {
         rules.add(AntdFormRule(required = true, message = getEnumValue("NotBlank", "message", "请输入字段内容")))
     }
-    val ruleString = if (rules.isNotEmpty()) "rules={${rules.toJSONString(JSONWriter.Feature.PrettyFormat)}}" else ""
+    val ruleString = if (rules.isNotEmpty()) "rules={${MyUtil.getPrettyJson(rules)}}" else ""
 
     val textItem = "<ProFormText name={'$name'} label={'${getSchemaDescription()}'} $ruleString />"
 
@@ -88,15 +86,18 @@ fun KtClass.generateAntdFormString(): String {
     }
 
 
-    val config = TemplateConfig()
-    val engine: TemplateEngine = FreemarkerEngine(config)
-    val template = engine.getTemplate(FileUtil.getAntdFormTempTxt)
+    val velocityEngine = VelocityEngine()
+    velocityEngine.init()
+    val ctx = VelocityContext()
+    ctx.put("attrItemsText",sb)
+    ctx.put("className",getClassName)
+    ctx.put("interface",getTypescriptInterface)
+    val temp = velocityEngine.getTemplate(FileUtil.getAntdFormTempTxt)
+    val stringWriter = StringWriter()
+    temp.merge(ctx,stringWriter)
     return """
 ${
-        template.render(
-            Dict.create().set("attrItemsText", sb).set("className", this.getClassName)
-                .set("interface", this.getTypescriptInterface)
-        )
+        stringWriter.toString().trimIndent()
     }
     """.trimIndent()
 }
