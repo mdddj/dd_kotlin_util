@@ -18,6 +18,10 @@ This Kotlin plugin tool is a powerful development aid crafted for swift batch co
                 text="创建模块">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="CutCopyPasteGroup"/>
         </action>
+        <action id="FFmpegVideoToGifAction" class="shop.itbug.dd_kotlin_util.action.FFmpegVideoToGifAction"
+                text="视频转GIF" description="视频转GIF">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
     </actions>
     <actions>
         <group id="antd entity util" popup="true" text="Antd Utils">
