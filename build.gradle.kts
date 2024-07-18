@@ -59,6 +59,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("232")
+        untilBuild.set("242.*")
         changeNotes.set(changeLog)
     }
 
@@ -81,7 +82,6 @@ tasks {
 intellijPlatform {
     verifyPlugin {
         ides {
-            local(file("/Applications/IntelliJ IDEA Ultimate.app"))
             local(file("/Users/ldd/Applications/IntelliJ IDEA Ultimate.app"))
         }
     }
