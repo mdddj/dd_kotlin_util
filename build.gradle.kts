@@ -6,13 +6,13 @@ import java.util.*
 
 
 plugins {
-    kotlin("jvm") version "2.0.0"
-    id("org.jetbrains.changelog") version "2.2.0"
-    id("org.jetbrains.intellij.platform") version "2.0.0-beta8"
+    kotlin("jvm") version "2.0.20"
+    id("org.jetbrains.changelog") version "2.2.1"
+    id("org.jetbrains.intellij.platform") version "2.0.1"
 }
 
 group = "shop.itbug"
-version = "1.0.7"
+version = "1.0.8"
 
 repositories {
     mavenCentral()
@@ -59,7 +59,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("232")
-        untilBuild.set("242.*")
+        untilBuild.set("243.*")
         changeNotes.set(changeLog)
     }
 
@@ -80,9 +80,10 @@ tasks {
 }
 
 intellijPlatform {
-    verifyPlugin {
+    pluginVerification {
+
         ides {
-            local(file("/Users/ldd/Applications/IntelliJ IDEA Ultimate.app"))
+            local(file("/Applications/IntelliJ IDEA Ultimate 2024.2.2.app"))
         }
     }
 }

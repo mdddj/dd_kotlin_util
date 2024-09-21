@@ -1,0 +1,10 @@
+<ivy-module version="2.0">
+  <info organisation="localIde" module="IU" revision="242.22855.74+116"/>
+  <configurations>
+    <conf name="default" visibility="public"/>
+  </configurations>
+  <publications>
+    <artifact name="/Applications/IntelliJ IDEA Ultimate 2024.2.2.app/Contents" type="directory" conf="default"/>
+  </publications>
+  <dependencies/>
+</ivy-module>

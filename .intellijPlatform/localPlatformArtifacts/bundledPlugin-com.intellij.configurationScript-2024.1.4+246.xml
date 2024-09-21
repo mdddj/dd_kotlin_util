@@ -1,0 +1,10 @@
+<ivy-module version="2.0">
+  <info organisation="bundledPlugin" module="com.intellij.configurationScript" revision="2024.1.4+246"/>
+  <configurations>
+    <conf name="default" visibility="public"/>
+  </configurations>
+  <publications>
+    <artifact name="/Users/ldd/.gradle/caches/transforms-4/7581522dec7f55e26592fee744505d34/transformed/ideaIU-2024.1.4-aarch64/plugins/configurationScript" type="directory" conf="default"/>
+  </publications>
+  <dependencies/>
+</ivy-module>

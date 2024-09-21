@@ -1,0 +1,12 @@
+<ivy-module version="2.0">
+  <info organisation="bundledPlugin" module="com.intellij.javaee.el" revision="241.18034.62+76"/>
+  <configurations>
+    <conf name="default" visibility="public"/>
+  </configurations>
+  <publications>
+    <artifact name="/Users/ldd/.gradle/caches/8.9/transforms/c0cbb9ebafefd6d7ab82b40cd401ca01/transformed/ideaIU-2024.1.4-aarch64/plugins/javaee-el-core" type="directory" conf="default"/>
+  </publications>
+  <dependencies>
+    <dependency org="bundledPlugin" name="com.intellij.javaee" rev="241.18034.62+620"/>
+  </dependencies>
+</ivy-module>

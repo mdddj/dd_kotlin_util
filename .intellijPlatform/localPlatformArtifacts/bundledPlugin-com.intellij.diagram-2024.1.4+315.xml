@@ -1,0 +1,13 @@
+<ivy-module version="2.0">
+  <info organisation="bundledPlugin" module="com.intellij.diagram" revision="2024.1.4+315"/>
+  <configurations>
+    <conf name="default" visibility="public"/>
+  </configurations>
+  <publications>
+    <artifact name="/Users/ldd/.gradle/caches/transforms-4/75229328b9096d41fe06875c1a666fd6/transformed/ideaIU-2024.1.4/plugins/uml" type="directory" conf="default"/>
+  </publications>
+  <dependencies>
+    <dependency org="bundledPlugin" name="com.intellij.java" rev="2024.1.4+315"/>
+    <dependency org="bundledPlugin" name="com.intellij.properties" rev="2024.1.4+315"/>
+  </dependencies>
+</ivy-module>

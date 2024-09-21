@@ -1,0 +1,14 @@
+<ivy-module version="2.0">
+  <info organisation="bundledPlugin" module="intellij.grid.impl" revision="241.18034.62+52"/>
+  <configurations>
+    <conf name="default" visibility="public"/>
+  </configurations>
+  <publications>
+    <artifact name="/Users/ldd/.gradle/caches/8.10.1/transforms/6c8e850ab72716614bf0aad98a10d705/transformed/ideaIU-2024.1.4-aarch64/plugins/grid-impl" type="directory" conf="default"/>
+  </publications>
+  <dependencies>
+    <dependency org="bundledPlugin" name="intellij.charts" rev="241.18034.62+264"/>
+    <dependency org="bundledPlugin" name="intellij.grid.core.impl" rev="241.18034.62+746"/>
+    <dependency org="bundledPlugin" name="com.intellij.platform.images" rev="241.18034.62+225"/>
+  </dependencies>
+</ivy-module>
