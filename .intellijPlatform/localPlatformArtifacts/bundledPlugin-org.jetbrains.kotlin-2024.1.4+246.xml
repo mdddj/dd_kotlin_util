@@ -1,0 +1,32 @@
+<ivy-module version="2.0">
+  <info organisation="bundledPlugin" module="org.jetbrains.kotlin" revision="2024.1.4+246"/>
+  <configurations>
+    <conf name="default" visibility="public"/>
+  </configurations>
+  <publications>
+    <artifact name="/Users/ldd/.gradle/caches/transforms-4/7581522dec7f55e26592fee744505d34/transformed/ideaIU-2024.1.4-aarch64/plugins/Kotlin" type="directory" conf="default"/>
+  </publications>
+  <dependencies>
+    <dependency org="bundledPlugin" name="org.jetbrains.java.decompiler" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="NodeJS" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="Coverage" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="org.intellij.intelliLang" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="JUnit" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="com.intellij.java-i18n" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="org.jetbrains.idea.maven" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="TestNG-J" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="com.intellij.java" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="com.intellij.completion.ml.ranking" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="com.jetbrains.performancePlugin" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="com.intellij.gradle" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="com.intellij.LineProfiler" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="org.jetbrains.debugger.streams" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="JavaScriptDebugger" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="org.jetbrains.plugins.gradle" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="training" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="tanvd.grazi" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="com.intellij.copyright" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="org.intellij.groovy" rev="2024.1.4+246"/>
+    <dependency org="bundledPlugin" name="Git4Idea" rev="2024.1.4+246"/>
+  </dependencies>
+</ivy-module>

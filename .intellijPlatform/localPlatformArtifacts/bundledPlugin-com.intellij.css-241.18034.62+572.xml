@@ -1,0 +1,13 @@
+<ivy-module version="2.0">
+  <info organisation="bundledPlugin" module="com.intellij.css" revision="241.18034.62+572"/>
+  <configurations>
+    <conf name="default" visibility="public"/>
+  </configurations>
+  <publications>
+    <artifact name="/Users/ldd/.gradle/caches/8.9/transforms/c0cbb9ebafefd6d7ab82b40cd401ca01/transformed/ideaIU-2024.1.4-aarch64/plugins/css-impl" type="directory" conf="default"/>
+  </publications>
+  <dependencies>
+    <dependency org="bundledPlugin" name="com.intellij.platform.images" rev="241.18034.62+112"/>
+    <dependency org="bundledPlugin" name="com.intellij.copyright" rev="241.18034.62+35"/>
+  </dependencies>
+</ivy-module>
