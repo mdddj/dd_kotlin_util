@@ -1,6 +1,8 @@
 # Changelog
 
-## [1.0.9] - 2024-09-24
+## Unreleased
+
+## 1.0.9 - 2024-09-24
 
 - 适配到2024.3
 
@@ -17,7 +19,6 @@
 
 - 添加java转kotlin自动修复功能,@Autowired,和 @Resource, ?? -> lateinit var
 - 添加kotlin接口和class可空转不可空一键修复功能
-
 
 ### [1.0.1] - 2024-05-25
 
